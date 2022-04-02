@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
+﻿using MathNet.Numerics.LinearAlgebra;
 
 public struct Point3D
 {
@@ -29,6 +24,15 @@ namespace PrinterTiltCompensation
 
         static Matrix<double> TransfomationMatrix = Matrix<double>.Build.Dense(3, 3);
 
+        /// <summary>
+        /// This method receives two vectors and calculates the cross product between the two.
+        /// </summary>
+        /// <returns>
+        /// Cross product vector.
+        /// </returns>
+        /// <remarks>
+        /// Vector must have a length of 3.
+        /// </remarks>
         public static Vector<double> CrossProduct(Vector<double> left, Vector<double> right)
         {
             if ((left.Count != 3 || right.Count != 3))
@@ -44,6 +48,15 @@ namespace PrinterTiltCompensation
             return result;
         }
 
+        /// <summary>
+        /// This method calculates the cross product matrix of a vector.
+        /// </summary>
+        /// <returns>
+        /// A 3x3 cross product matrix.
+        /// </returns>
+        /// <remarks>
+        /// Vector must have a length of 3.
+        /// </remarks>
         public static Matrix<double> CrossProductMatrix(Vector<double> vector)
         {
             if (vector.Count != 3)
@@ -63,6 +76,12 @@ namespace PrinterTiltCompensation
             return result;
         }
 
+        /// <summary>
+        /// This method creates the transfomation matrix using the rotation and translation matrix.
+        /// </summary>
+        /// <returns>
+        /// A 4x4 homogenous transformation matrix.
+        /// </returns>
         public static Matrix<double> CreateTransformationMatrix(Matrix<double> rotation, Matrix<double> translation)
         {
             var M = Matrix<double>.Build;
@@ -78,7 +97,12 @@ namespace PrinterTiltCompensation
             return TransfomationMatrix;
         }
 
-
+        /// <summary>
+        /// This method calculates the translation matrix based on the plane normal and a point of the plane.
+        /// </summary>
+        /// <returns>
+        /// A 1x3 translation matrix.
+        /// </returns>
         public static Matrix<double> CalculateTranslationMatrix(Vector<double> normal, Point3D point)
         {
             var M = Matrix<double>.Build;
@@ -89,6 +113,12 @@ namespace PrinterTiltCompensation
             return translationMatrix;
         }
 
+        /// <summary>
+        /// This method calculates a rotation matrix based on the rotation axis and angle.
+        /// </summary>
+        /// <returns>
+        /// A 3x3 rotation matrix.
+        /// </returns>
         public static Matrix<double> CalculateRotationMatrix(Vector<double> rotationAxis, double angle)
         {
             var M = Matrix<double>.Build;
@@ -97,6 +127,10 @@ namespace PrinterTiltCompensation
 
         }
 
+        /// <summary>
+        /// This method calculates a transformation matrix used to compensate the bed tilt 
+        /// based on the measurement of three points on the bed surface. It updates the TransfomationMatrix. 
+        /// </summary>
         public static void PrepareTiltCompensation(Point3D point_1, Point3D point_2, Point3D point_3)
         {
             Console.WriteLine("Calculating tilt compensation");
@@ -129,14 +163,18 @@ namespace PrinterTiltCompensation
 
         }
 
+        /// <summary>
+        /// This method receives a point for the printer to move and applies 
+        /// a compensation based on the bed tilt
+        /// </summary>
+        /// <returns>
+        /// Compensated point
+        /// </returns>
         public static Point3D ApplyTiltCompensation(Point3D point)
         {
             double[] coorArray = { point.pos_x, point.pos_y, point.pos_z, 1 };
             var coor = Vector<double>.Build.DenseOfArray(coorArray);
             var newVector = PrinterTiltCompensation.TransfomationMatrix * coor;
-
-            Console.WriteLine(PrinterTiltCompensation.TransfomationMatrix);
-            Console.WriteLine(coor);
 
             Point3D newPoint = new Point3D();
             newPoint.setPosition(newVector[0], newVector[1], newVector[2]);
