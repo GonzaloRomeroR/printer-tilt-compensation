@@ -19,7 +19,7 @@ public struct Point3D
 
 namespace PrinterTiltCompensation
 {
-    class PrinterTiltCompensation
+    public class PrinterTiltCompensationClass
     {
 
         static Matrix<double> TransfomationMatrix = Matrix<double>.Build.Dense(3, 3);
@@ -159,7 +159,7 @@ namespace PrinterTiltCompensation
 
             var RotationMatrix = CalculateRotationMatrix(rotationAxis, angle);
             var TranslationMatrix = CalculateTranslationMatrix(normal, point_1);
-            PrinterTiltCompensation.TransfomationMatrix = CreateTransformationMatrix(RotationMatrix, TranslationMatrix);
+            PrinterTiltCompensationClass.TransfomationMatrix = CreateTransformationMatrix(RotationMatrix, TranslationMatrix);
 
         }
 
@@ -174,7 +174,7 @@ namespace PrinterTiltCompensation
         {
             double[] coorArray = { point.pos_x, point.pos_y, point.pos_z, 1 };
             var coor = Vector<double>.Build.DenseOfArray(coorArray);
-            var newVector = PrinterTiltCompensation.TransfomationMatrix * coor;
+            var newVector = PrinterTiltCompensationClass.TransfomationMatrix * coor;
 
             Point3D newPoint = new Point3D();
             newPoint.setPosition(newVector[0], newVector[1], newVector[2]);
