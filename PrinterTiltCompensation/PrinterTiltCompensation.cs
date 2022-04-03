@@ -131,7 +131,10 @@ namespace PrinterTiltCompensation
         /// This method calculates a transformation matrix used to compensate the bed tilt 
         /// based on the measurement of three points on the bed surface. It updates the TransfomationMatrix. 
         /// </summary>
-        public static void PrepareTiltCompensation(Point3D point_1, Point3D point_2, Point3D point_3)
+        /// <returns>
+        /// A 4x4 transformation matrix.
+        /// </returns>
+        public static Matrix<double> PrepareTiltCompensation(Point3D point_1, Point3D point_2, Point3D point_3)
         {
             Console.WriteLine("Calculating tilt compensation");
 
@@ -160,7 +163,7 @@ namespace PrinterTiltCompensation
             var RotationMatrix = CalculateRotationMatrix(rotationAxis, angle);
             var TranslationMatrix = CalculateTranslationMatrix(normal, point_1);
             PrinterTiltCompensationClass.TransfomationMatrix = CreateTransformationMatrix(RotationMatrix, TranslationMatrix);
-
+            return PrinterTiltCompensationClass.TransfomationMatrix;
         }
 
         /// <summary>
