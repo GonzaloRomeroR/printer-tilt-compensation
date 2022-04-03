@@ -145,8 +145,6 @@ namespace PrinterTiltCompensation
             {
                 RotationMatrix = Math.Cos(angle) * M.DenseIdentity(3) + Math.Sin(angle) * CrossProductMatrix(rotationAxis) + (1 - Math.Cos(angle)) * rotationAxis.OuterProduct(rotationAxis);
             }
-            Console.WriteLine(RotationMatrix);
-
             return RotationMatrix;
 
         }

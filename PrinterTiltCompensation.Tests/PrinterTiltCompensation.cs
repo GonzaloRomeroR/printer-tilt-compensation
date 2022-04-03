@@ -94,7 +94,7 @@ public class UnitTests
         Console.WriteLine(result.ToString());
         Console.WriteLine(M.DenseOfRowArrays(row1, row2, row3, row4).ToString());
         var equal = result.ToString() == M.DenseOfRowArrays(row1, row2, row3, row4).ToString();
-        Debug.Assert(equal, "CrossProductMatrix function received unexpected output");
+        Debug.Assert(equal, "PrinterTiltCompensationClass function received unexpected output");
     }
 
     [Theory]
@@ -104,6 +104,22 @@ public class UnitTests
         new double[] { -1, 0, 0.5 },
         new double[] { -1, 1, 0.5 },
         new double[] { 0, 0, 1.5 }
+        )
+    ]
+    [InlineData(
+        new double[] { 0, 0, 1 },
+        new double[] { 1, 0, -0.5 },
+        new double[] { -1, 0, 0.5 },
+        new double[] { 0, 1, 0 },
+        new double[] { -0.447214, 0, 0.894427 }
+        )
+    ]
+    [InlineData(
+        new double[] { 0, 0, 1 },
+        new double[] { 1, 0, 0 },
+        new double[] { -1, 0, 0 },
+        new double[] { 0, 1, 0.2 },
+        new double[] { 0, 0.196116, 0.980581 }
         )
     ]
     public void ApplyTiltCompensation(
@@ -130,7 +146,10 @@ public class UnitTests
         PrinterTiltCompensationClass.PrepareTiltCompensation(pos_1, pos_2, pos_3);
         var result = PrinterTiltCompensationClass.ApplyTiltCompensation(point);
 
-        var equal = result.ToArray().ToString() == expected.ToString();
-        Debug.Assert(equal, "CrossProductMatrix function received unexpected output");
+        Console.WriteLine(V.Dense(expected));
+        Console.WriteLine(V.Dense(result.ToArray()));
+
+        var equal = V.Dense(result.ToArray()).ToString() == V.Dense(expected).ToString();
+        Debug.Assert(equal, "PrepareTiltCompensation function received unexpected output");
     }
 }

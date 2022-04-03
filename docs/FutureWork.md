@@ -4,4 +4,5 @@
 * The code could be optimized by changing some data types to avoid having to do type translation inside the classes methods, increasing the algorithms performance.
 * In order to compensate for surface roughness, Once the tilt compensation is measured, the printer could do a sweep in the surface to seek for imperfections creatin a surface map with the irregularities and take them into consideration once the printing starts. In case of deformation in the bed surface, the printer could sample certain points in the surface, create a grid and interpolate between the points. This could be added to the compensation algorithm by assing this irregularities once the tilt compensation transformation is done.  
 * Increase the number of cases in the unit tests to consider different bed's inclinations. Consider corner cases.
+* Improve test cases output messages.
 
