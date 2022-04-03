@@ -32,6 +32,8 @@ namespace PrinterTiltCompensation
         /// <summary>
         /// This method receives two vectors and calculates the cross product between the two.
         /// </summary>
+        /// <param name="left">The left vector in the cross product</param>
+        /// <param name="right">The left vector in the cross product</param> 
         /// <returns>
         /// Cross product vector.
         /// </returns>
@@ -56,6 +58,7 @@ namespace PrinterTiltCompensation
         /// <summary>
         /// This method calculates the cross product matrix of a vector.
         /// </summary>
+        /// <param name="vector">Vector to calculate the cross product matrix</param>
         /// <returns>
         /// A 3x3 cross product matrix.
         /// </returns>
@@ -84,6 +87,8 @@ namespace PrinterTiltCompensation
         /// <summary>
         /// This method creates the transfomation matrix using the rotation and translation matrix.
         /// </summary>
+        /// <param name="rotation">3x3 rotation matrix</param>
+        /// <param name="translation">1x3 tranlation matrix</param>
         /// <returns>
         /// A 4x4 homogenous transformation matrix.
         /// </returns>
@@ -105,6 +110,8 @@ namespace PrinterTiltCompensation
         /// <summary>
         /// This method calculates the translation matrix based on the plane normal and a point of the plane.
         /// </summary>
+        /// <param name="normal">1x3 vector containing the normal to the measured plane</param>
+        /// <param name="point">Point in the pbed surface</param>
         /// <returns>
         /// A 1x3 translation matrix.
         /// </returns>
@@ -121,6 +128,8 @@ namespace PrinterTiltCompensation
         /// <summary>
         /// This method calculates a rotation matrix based on the rotation axis and angle.
         /// </summary>
+        /// <param name="rotationAxis">1x3 vector with the rotation axis of the measured plane</param>
+        /// <param name="angle">Angle between the ideal and measured normal around the rotation axis </param>
         /// <returns>
         /// A 3x3 rotation matrix.
         /// </returns>
@@ -146,6 +155,9 @@ namespace PrinterTiltCompensation
         /// This method calculates a transformation matrix used to compensate the bed tilt 
         /// based on the measurement of three points on the bed surface. It updates the TransfomationMatrix. 
         /// </summary>
+        /// <param name="point_1">Point on the plane surface</param>
+        /// <param name="point_2">Point on the plane surface</param>
+        /// <param name="point_3">Point on the plane surface</param>
         /// <returns>
         /// A 4x4 transformation matrix.
         /// </returns>
@@ -185,6 +197,7 @@ namespace PrinterTiltCompensation
         /// This method receives a point for the printer to move and applies 
         /// a compensation based on the bed tilt
         /// </summary>
+        /// <param name="point">Point to compensate</param>
         /// <returns>
         /// Compensated point
         /// </returns>
