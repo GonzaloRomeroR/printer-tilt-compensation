@@ -1,4 +1,5 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
+using System;
 
 public struct Point3D
 {
@@ -14,6 +15,10 @@ public struct Point3D
     public void printPoint()
     {
         Console.WriteLine("({0}, {1}, {2})", pos_x, pos_y, pos_z);
+    }
+    public double[] ToArray()
+    {
+        return new double[] { pos_x, pos_y, pos_z };
     }
 }
 
@@ -122,7 +127,17 @@ namespace PrinterTiltCompensation
         public static Matrix<double> CalculateRotationMatrix(Vector<double> rotationAxis, double angle)
         {
             var M = Matrix<double>.Build;
-            var RotationMatrix = Math.Cos(angle) * M.DenseIdentity(3) + Math.Sin(angle) * CrossProductMatrix(rotationAxis) + (1 - Math.Cos(angle)) * rotationAxis.OuterProduct(rotationAxis);
+            var RotationMatrix = M.DenseIdentity(3);
+            if (Math.Abs(angle) < 0.001 || Math.Abs(angle - Math.PI) < 0.001)
+            {
+                RotationMatrix = M.DenseIdentity(3);
+            }
+            else
+            {
+                RotationMatrix = Math.Cos(angle) * M.DenseIdentity(3) + Math.Sin(angle) * CrossProductMatrix(rotationAxis) + (1 - Math.Cos(angle)) * rotationAxis.OuterProduct(rotationAxis);
+            }
+            Console.WriteLine(RotationMatrix);
+
             return RotationMatrix;
 
         }
